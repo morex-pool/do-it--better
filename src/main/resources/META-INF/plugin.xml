@@ -1,0 +1,21 @@
+<idea-plugin>
+    <id>org.doitbetter</id>
+    <name>Do It Better</name>
+    <vendor>Mory-Poul.com</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="org.doitbetter.CodeQualityDetector"/>
+    </extensions>
+
+    <actions>
+        <action id="AnalyzeCodeQuality.Detect"
+                class="org.doitbetter.AnalyzeCodeQualityAction"
+                text="Do It Better"
+                description="Scans for analyzing the code to do it better">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
