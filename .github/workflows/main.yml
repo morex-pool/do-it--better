@@ -1,0 +1,16 @@
+name: Delete Merged Branch from Development
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - development  # This ensures the workflow only triggers on the 'development' branch
+
+jobs:
+  delete-branch:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'development'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete merged branch
+        run: |
+          git push origin --delete ${{ github.event.pull_request.head.ref }}
