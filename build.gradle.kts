@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.intellij") version "1.17.2"
 }
 
 group = "org.mortezapouladi"
@@ -9,14 +9,20 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    google()
+    gradlePluginPortal()
+    mavenLocal()
+    maven {
+        url = uri("https://packages.jetbrains.team/maven/p/idea/dev")
+    }
 }
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2023.2.8")
-    type.set("IC") // Target IDE Platform
-    plugins.set(listOf("java"))
+    version.set("2024.1") // Use the appropriate IntelliJ IDEA version
+    type.set("IC") // IntelliJ IDEA Community Edition
+    plugins.set(listOf("java")) // Add additional plugins if needed
 }
 
 tasks {
@@ -27,6 +33,10 @@ tasks {
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
+    }
+
+    prepareSandbox {
+        dependsOn(processResources)
     }
 
     patchPluginXml {
@@ -43,4 +53,8 @@ tasks {
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
+}
+
+dependencies {
+    // Additional dependencies can be added if needed
 }

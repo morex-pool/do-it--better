@@ -34,7 +34,7 @@ public class CodeQualityDetector {
 
 			PsiManager psiManager = PsiManager.getInstance(project);
 			GlobalSearchScope projectScope = GlobalSearchScope.projectScope(project);
-			ToolWindow toolWindow = getToolWindow("Analyze Code Quality", project);
+			ToolWindow toolWindow = getToolWindow("Do-It-Better", project);
 
 			for (Map.Entry<String, String> requirement : requirements.entrySet()) {
 

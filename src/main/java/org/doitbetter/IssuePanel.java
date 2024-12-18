@@ -78,6 +78,7 @@ public class IssuePanel extends JPanel {
 						descriptor.navigate(true);
 					} catch (Exception ex) {
 						ex.printStackTrace();
+						ProjectContextHolder.showErrorNotification("Error: " + ex.getMessage());
 					}
 				}
 			});
