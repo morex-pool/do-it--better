@@ -10,7 +10,10 @@ import com.intellij.openapi.project.Project;
 public class AnalyzeCodeQualityAction extends AnAction {
 	@Override
 	public void actionPerformed(AnActionEvent e) {
+
 		Project project = e.getProject();
+		ProjectContextHolder.setCurrentProject(project);
+
 		Map<String, String> requirements = new HashMap<>();
 		requirements.put("Unused Private Method", "java");
 		if (project != null) {

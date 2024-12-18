@@ -1,0 +1,30 @@
+{
+  "rules": [
+    {
+      "name": "rule-name-1",
+      "description": "rule-description-1",
+      "active": true,
+      "works_over": {
+        "method": true,
+        "class": false
+      },
+      "priority": 1,
+      "priority-meaning": "normal",
+      "context": "rule context 1",
+      "url": "http://www.test1.com/rule/82645"
+    },
+    {
+      "name": "rule-name-2",
+      "description": "rule-description-2",
+      "active": true,
+      "works_over": {
+        "method": false,
+        "class": true
+      },
+      "priority": 2,
+      "priority-meaning": "medium",
+      "context": "rule context 2",
+      "url": "http://www.test1.com/rule/82385"
+    }
+  ]
+}

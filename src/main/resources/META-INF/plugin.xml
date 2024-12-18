@@ -2,11 +2,18 @@
     <id>org.doitbetter</id>
     <name>Do It Better</name>
     <vendor>Mory-Poul.com</vendor>
+    <version>1.0</version>
+
+    <description>A plugin to manage rules from JSON configuration</description>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="RulesManagerNotificationGroup" displayType="BALLOON"
+                           key="rules.manager.notification.group"/>
+        <applicationConfigurable instance="org.doitbetter.RulesConfigurable"/>
+        <applicationService serviceImplementation="org.doitbetter.RulesManager"/>
         <applicationService serviceImplementation="org.doitbetter.CodeQualityDetector"/>
     </extensions>
 
