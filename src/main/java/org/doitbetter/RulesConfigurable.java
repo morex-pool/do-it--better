@@ -1,9 +1,11 @@
 package org.doitbetter;
 
-
 import java.awt.BorderLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.Nullable;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.Configurable;
@@ -16,59 +18,48 @@ public class RulesConfigurable implements Configurable, Disposable {
     private RulesListPanel rulesListPanel;
     private RulesImportExportPanel importExportPanel;
 
+    @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName() {
-        return "Rules Manager";
+        return "Do It Better";
     }
 
-    /*
-    Add to dispose() if:
-        You have event listeners: Unregister any listeners added during the lifecycle.
-        You use threads or executors: Shut them down to avoid memory leaks.
-        You work with disposable IntelliJ components: Ensure their dispose() method is called.
-     */
-    @Override
-    public void dispose() {
-        // Additional cleanup, if required
-        if (rulesListPanel != null) {
-            rulesListPanel.dispose();
-        }
-        if (importExportPanel != null) {
-            importExportPanel.dispose();
-        }
-    }
-
+    @Nullable
     @Override
     public JComponent createComponent() {
-        mainPanel = new JPanel(new BorderLayout());
-        tabbedPane = new TabbedPaneWrapper(this); // `this` is a Disposable
-
-        // First Tab: Rules List
-        rulesListPanel = new RulesListPanel();
-        tabbedPane.addTab("Rules List", rulesListPanel);
-
-        // Second Tab: Import/Export
-        importExportPanel = new RulesImportExportPanel(rulesListPanel);
-        tabbedPane.addTab("Import/Export", importExportPanel);
-
-        mainPanel.add(tabbedPane.getComponent(), BorderLayout.CENTER);
-        return mainPanel;
+        if (rulesListPanel == null) {
+            rulesListPanel = new RulesListPanel();
+        }
+        return rulesListPanel;
     }
 
     @Override
     public boolean isModified() {
-        return rulesListPanel.isModified() || importExportPanel.isModified();
+        return rulesListPanel != null && rulesListPanel.isModified();
     }
 
     @Override
     public void apply() throws ConfigurationException {
-        rulesListPanel.apply();
-        importExportPanel.apply();
+        if (rulesListPanel != null) {
+            rulesListPanel.apply();
+        }
     }
 
     @Override
     public void reset() {
-        rulesListPanel.reset();
-        importExportPanel.reset();
+        if (rulesListPanel != null) {
+            rulesListPanel.reset();
+        }
     }
+
+    @Override
+    public void disposeUIResources() {
+        rulesListPanel = null;
+    }
+
+    @Override
+    public void dispose() {
+        disposeUIResources();
+    }
+
 }

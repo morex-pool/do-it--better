@@ -12,16 +12,22 @@
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="RulesManagerNotificationGroup" displayType="BALLOON"
                            key="rules.manager.notification.group"/>
-        <applicationConfigurable instance="org.doitbetter.RulesConfigurable"/>
+        <applicationConfigurable
+                instance="org.doitbetter.RulesConfigurable"
+                id="org.doitbetter.RulesConfigurable"
+                displayName="Do It Better"
+                groupId="tools"/>
         <applicationService serviceImplementation="org.doitbetter.RulesManager"/>
         <applicationService serviceImplementation="org.doitbetter.CodeQualityDetector"/>
+        <toolWindow id="Do-It-Better" secondary="true" icon="AllIcons.General.Modified" anchor="bottom"
+                    factoryClass="org.doitbetter.DoItBetterToolWindowFactory"/>
     </extensions>
 
     <actions>
-        <action id="AnalyzeCodeQuality.Detect"
+        <action id="org.doitbetter.AnalyzeCodeQualityAction"
                 class="org.doitbetter.AnalyzeCodeQualityAction"
                 text="Do It Better"
-                description="Scans for analyzing the code to do it better">
+                description="Analyze code quality using Do-It-Better">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
         </action>
     </actions>
