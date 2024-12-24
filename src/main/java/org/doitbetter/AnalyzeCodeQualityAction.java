@@ -6,21 +6,24 @@ import java.util.Map;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowManager;
 
 public class AnalyzeCodeQualityAction extends AnAction {
-	@Override
 	public void actionPerformed(AnActionEvent e) {
-
 		Project project = e.getProject();
+		if (project == null) {
+			return;
+		}
 		ProjectContextHolder.setCurrentProject(project);
-
 		Map<String, String> requirements = new HashMap<>();
 		requirements.put("Unused Private Method", "java");
-		if (project != null) {
-			(new CodeQualityDetector()).start(project, requirements);
+		ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow("Do-It-Better");
+		if (toolWindow != null) {
+			toolWindow.show(null);
 		} else {
-			System.err.println("No project found. Ensure you are running this action within a project context.");
+			NotificationUtil.showWarningNotification(project, "Do-It-Better tool window not found");
 		}
-
+		new CodeQualityDetector().start(project, requirements);
 	}
 }
